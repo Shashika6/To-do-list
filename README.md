@@ -5,6 +5,8 @@ A full-stack Todo List application built with React, TypeScript, and Node.js.
 
 ## Demo 
 
+https://github.com/user-attachments/assets/836bb25f-e614-428d-a762-12d1b8c69e23
+
 ## Features
 
 - Create, read, update, and delete todos
@@ -17,10 +19,12 @@ A full-stack Todo List application built with React, TypeScript, and Node.js.
 ## Future improvements
 
 - Improve UX by adding prompts on user action (eg:- delete)
+- Store search params in url to keep the data on page refresh
 - Allowing user to edit recurrence and add a due date with reminder
 - Use a cron job like aws lambda for auto generation of to-do
 - Use docker for one script setup of project
 - Improve test coverage by adding more unit and e2e tests
+- Improve priority mapping to use numbers for better filtering
 
 ## Tech Stack
 
