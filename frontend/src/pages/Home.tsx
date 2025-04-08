@@ -102,7 +102,6 @@ function HomePage() {
   };
 
   const toggleTodo = async (id: string) => {
-    setIsLoading(true);
     try {
       const todo = todos.find((t) => t.id === id);
       if (!todo) return;
@@ -116,10 +115,8 @@ function HomePage() {
       );
     } catch (error) {
       console.error("Error toggling todo:", error);
-      toast.error("Failed to update task status");
-    } finally {
-      setIsLoading(false);
-    }
+      toast.error("Failed to update task status check for pending dependencies");
+    } 
   };
 
   const updateTodoPriority = async (id: string, priority: Priority) => {
