@@ -54,6 +54,47 @@ describe('Todo Model', () => {
     (Todo.findById as jest.Mock).mockImplementation((id) => Promise.resolve(mockTodo));
   });
 
+  describe('Basic CRUD Operations', () => {
+    it('should create a new todo', async () => {
+      const todoData = {
+        title: 'New Todo',
+        priority: Priority.HIGH,
+        recurrence: Recurrence.DAILY
+      };
+
+      const todo = await Todo.create(todoData);
+      
+      expect(todo).toBeDefined();
+      expect(todo.title).toBe(todoData.title);
+      expect(todo.priority).toBe(todoData.priority);
+      expect(todo.recurrence).toBe(todoData.recurrence);
+      expect(todo._id).toBe('123');
+    });
+
+    it('should delete a todo', async () => {
+      const deleteResult = { deletedCount: 1 };
+      (Todo.deleteMany as jest.Mock).mockResolvedValue(deleteResult);
+
+      const result = await Todo.deleteMany({ _id: '123' });
+      
+      expect(result.deletedCount).toBe(1);
+      expect(Todo.deleteMany).toHaveBeenCalledWith({ _id: '123' });
+    });
+
+    it('should find a todo by id', async () => {
+      const todo = await Todo.findById('123');
+      
+      if (!todo) {
+        throw new Error('Todo not found');
+      }
+      
+      expect(todo).toBeDefined();
+      expect(todo._id).toBe('123');
+      expect(todo.title).toBe('Test Todo');
+      expect(Todo.findById).toHaveBeenCalledWith('123');
+    });
+  });
+
   describe('canComplete virtual property', () => {
     it('should return true when there are no dependencies', async () => {
       const todo = await Todo.create({
