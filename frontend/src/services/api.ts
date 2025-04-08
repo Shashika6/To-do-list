@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const API_BASE_URL = 'http://localhost:3001';
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:3001/api';
 
 const api = axios.create({
   baseURL: API_BASE_URL,
@@ -57,23 +57,23 @@ export const TodoAPI = {
     if (priority) params.append('priority', priority);
     if (status) params.append('status', status.toString());
 
-    const response =  params ? await api.get(`/api/todos?${params.toString()}`) : await api.get(`/api/todos`);
+    const response = params ? await api.get(`/todos?${params.toString()}`) : await api.get(`/todos`);
     return response.data;
   },
 
   // Create a new todo
   createTodo: async (todo: CreateTodoDto): Promise<Todo> => {
-    const response = await api.post('/api/todos', todo);
+    const response = await api.post('/todos', todo);
     return response.data;
   },
 
   updateTodo: async (id: string, updates: UpdateTodoDto): Promise<Todo> => {
-    const response = await api.put(`/api/todos/${id}`, updates);
+    const response = await api.put(`/todos/${id}`, updates);
     return response.data;
   },
 
   deleteTodo: async (id: string): Promise<void> => {
-    const response = await api.delete(`/api/todos/${id}`);
+    const response = await api.delete(`/todos/${id}`);
     if (response.status === 204) {
       return;
     }
@@ -87,7 +87,7 @@ export const TodoAPI = {
     if (priority) params.append('priority', priority);
     if (status) params.append('status', status.toString());
 
-    const response = await api.get(`/api/todos/search?${params.toString()}`);
+    const response = await api.get(`/todos/search?${params.toString()}`);
     return response.data;
   },
 };
