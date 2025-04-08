@@ -123,19 +123,15 @@ function HomePage() {
   };
 
   const updateTodoPriority = async (id: string, priority: Priority) => {
-    setIsLoading(true);
     try {
       const updatedTodo = await TodoAPI.updateTodo(id, { priority });
       setTodos(todos.map((t) => (t.id === id ? updatedTodo : t)));
     } catch (error) {
       console.error("Error updating todo priority:", error);
-    } finally {
-      setIsLoading(false);
     }
   };
 
   const deleteTodo = async (id: string) => {
-    setIsLoading(true);
     try {
       await TodoAPI.deleteTodo(id);
       setTodos(todos.filter((t) => t.id !== id));
@@ -147,8 +143,6 @@ function HomePage() {
       } else {
         toast.error("Failed to delete task");
       }
-    } finally {
-      setIsLoading(false);
     }
   };
 
